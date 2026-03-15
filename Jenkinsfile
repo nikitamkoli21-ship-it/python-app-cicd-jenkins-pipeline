@@ -34,10 +34,7 @@ pipeline {
                 sh '''
                     . venv/bin/activate
                     mkdir -p test-reports
-                    pytest --junitxml=test-reports/results.xml \
-                           --html=test-reports/report.html \
-                           --self-contained-html \
-                           -v
+                    pytest --junitxml=test-reports/results.xml --html=test-reports/report.html --self-contained-html -v
                 '''
             }
             post {
@@ -64,19 +61,3 @@ pipeline {
         }
     }
 }
-```
-
-4. Scroll down → **Commit changes**
-
----
-
-## Also update requirements.txt
-
-1. Click on `requirements.txt`
-2. Click **pencil icon ✏️**
-3. **Delete everything** and paste:
-```
-flask
-pytest
-pytest-html
-pytest-cov
