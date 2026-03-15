@@ -14,8 +14,7 @@ pipeline {
                     python3 -m venv venv
                     . venv/bin/activate
                     pip install --upgrade pip
-                    pip install -r requirements.txt
-                    pip install pytest pytest-html pytest-cov
+                    pip install flask pytest pytest-html pytest-cov
                 '''
             }
         }
@@ -25,6 +24,7 @@ pipeline {
                 sh '''
                     . venv/bin/activate
                     python3 -m py_compile app.py
+                    echo "Syntax check passed!"
                 '''
             }
         }
@@ -34,10 +34,10 @@ pipeline {
                 sh '''
                     . venv/bin/activate
                     mkdir -p test-reports
-                    pytest test.py \
-                        --junitxml=test-reports/results.xml \
-                        --html=test-reports/report.html \
-                        --self-contained-html
+                    pytest --junitxml=test-reports/results.xml \
+                           --html=test-reports/report.html \
+                           --self-contained-html \
+                           -v
                 '''
             }
             post {
@@ -64,3 +64,19 @@ pipeline {
         }
     }
 }
+```
+
+4. Scroll down → **Commit changes**
+
+---
+
+## Also update requirements.txt
+
+1. Click on `requirements.txt`
+2. Click **pencil icon ✏️**
+3. **Delete everything** and paste:
+```
+flask
+pytest
+pytest-html
+pytest-cov
